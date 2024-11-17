@@ -5,17 +5,16 @@
 using namespace std;
 
 // Definišite funkciju koju želite riješiti
-double f(double x) {
-    // Na primjer, rješavamo f(x) = x^3 - x - 2
-    return x * x * x - x - 2;
+double funkcija(double x) {
+    return x * x * x - x - 2; // Primer funkcije
 }
 
 // Proverava da li se uslovi za korišæenje metode regula falsi ispunjavaju
 bool isValid(double a, double b) {
-    return f(a) * f(b) < 0;
+    return funkcija(a) * funkcija(b) < 0;
 }
 
-int main() {
+void regulaFalsi() {
     double a, b, tolerance;
     const int maxIterations = 150;
 
@@ -30,7 +29,7 @@ int main() {
     // Proverava ispunjenost uslova
     if (!isValid(a, b)) {
         cout << "Funkcija ne menja znak u datom intervalu. Proverite granice." << endl;
-        return 1;
+        return;
     }
 
     double c; // Nova aproksimacija
@@ -42,14 +41,14 @@ int main() {
 
     do {
         // Izraèunaj novu aproksimaciju
-        c = b - (f(b) * (b - a)) / (f(b) - f(a));
-        error = fabs(f(c)); // Greška je apsolutna vrednost f(c)
+        c = b - (funkcija(b) * (b - a)) / (funkcija(b) - funkcija(a));
+        error = fabs(funkcija(c)); // Greška je apsolutna vrednost f(c)
 
         // Ispis rezultata
-        cout << iteration + 1 << "\t\t" << a << "\t" << b << "\t" << c << "\t" << f(c) << "\t" << error << endl;
+        cout << iteration + 1 << "\t\t" << a << "\t" << b << "\t" << c << "\t" << funkcija(c) << "\t" << error << endl;
 
         // Ažuriraj granice
-        if (f(c) * f(a) < 0) {
+        if (funkcija(c) * funkcija(a) < 0) {
             b = c; // c je u intervalu [a, b]
         }
         else {
@@ -61,8 +60,6 @@ int main() {
 
     // Ispis konaène aproksimacije
     cout << "Konaèna aproksimacija: " << c << endl;
-    cout << "F(c): " << f(c) << endl;
+    cout << "F(c): " << funkcija(c) << endl;
     cout << "Broj iteracija: " << iteration << endl;
-
-    return 0;
 }
