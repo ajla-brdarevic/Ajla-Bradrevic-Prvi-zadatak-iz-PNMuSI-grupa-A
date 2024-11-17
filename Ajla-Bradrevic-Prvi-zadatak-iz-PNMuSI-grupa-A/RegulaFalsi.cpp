@@ -4,62 +4,66 @@
 
 using namespace std;
 
-// Definišite funkciju koju želite riješiti
+// Definisanje funkcije Regula Falsi
 double funkcija(double x) {
-    return x * x * x - x - 2; // Primer funkcije
+    return x * x * x - x - 2; // Primjer funkcije: x^3 - x - 2
 }
 
-// Proverava da li se uslovi za korišæenje metode regula falsi ispunjavaju
+// Provjera uslova za korištenje metode regula falsi
+// Funkcija provjerava da li funkcija mijenja znak u granicama [a, b]
 bool isValid(double a, double b) {
     return funkcija(a) * funkcija(b) < 0;
 }
 
+// Implementacija metode Regula Falsi
 void regulaFalsi() {
-    double a, b, tolerance;
-    const int maxIterations = 150;
+    double a, b, tolerancija;             // Granice intervala i zadana taènost
+    const int maxIteracija = 150;     // Maksimalan broj iteracija
 
-    // Unos granica intervala i taènosti
+    // Unos granica intervala i tolerancije od strane korisnika
     cout << "Unesite granicu intervala a: ";
     cin >> a;
     cout << "Unesite granicu intervala b: ";
     cin >> b;
-    cout << "Unesite taènost (tolerance): ";
-    cin >> tolerance;
+    cout << "Unesite taènost (toleranciju): ";
+    cin >> tolerancija;
 
-    // Proverava ispunjenost uslova
+    // Provjera da li su zadovoljeni uslovi za primjenu metode
     if (!isValid(a, b)) {
-        cout << "Funkcija ne menja znak u datom intervalu. Proverite granice." << endl;
+        cout << "Funkcija ne mijenja znak u datom intervalu. Proverite granice." << endl;
         return;
     }
 
-    double c; // Nova aproksimacija
-    double error; // Greška
-    int iteration = 0;
+    double c;          // Nova aproksimacija korijena
+    double error;      // Trenutna greška
+    int iteracija = 0; // Brojaè iteracija
 
+    // Formatiranje ispisa za bolju preglednost
     cout << fixed << setprecision(6);
     cout << "Iteracija\tGranice (a, b)\tAproksimacija (c)\tF(c)\t\tGreška" << endl;
 
     do {
-        // Izraèunaj novu aproksimaciju
+        // Izraèunavanje nove aproksimacije koristeæi formulu metode regula falsi
         c = b - (funkcija(b) * (b - a)) / (funkcija(b) - funkcija(a));
-        error = fabs(funkcija(c)); // Greška je apsolutna vrednost f(c)
+        error = fabs(funkcija(c)); // Greška je apsolutna vrijednost funkcije u c
 
-        // Ispis rezultata
-        cout << iteration + 1 << "\t\t" << a << "\t" << b << "\t" << c << "\t" << funkcija(c) << "\t" << error << endl;
+        // Ispis rezultata trenutne iteracije
+        cout << iteracija + 1 << "\t\t" << a << "\t" << b << "\t" << c << "\t"
+            << funkcija(c) << "\t" << error << endl;
 
-        // Ažuriraj granice
+        // Ažuriranje granica intervala na osnovu znaka funkcije
         if (funkcija(c) * funkcija(a) < 0) {
-            b = c; // c je u intervalu [a, b]
+            b = c; // Nova granica postaje c
         }
         else {
-            a = c; // c je u intervalu [c, b]
+            a = c; // Nova granica postaje c
         }
 
-        iteration++;
-    } while (error > tolerance && iteration < maxIterations);
+        iteracija++; // Poveæanje broja iteracija
+    } while (error > tolerancija && iteracija < maxIteracija);
 
-    // Ispis konaène aproksimacije
+    // Završni ispis kada je postignuta tražena taènost ili dostignut maksimalan broj iteracija
     cout << "Konaèna aproksimacija: " << c << endl;
     cout << "F(c): " << funkcija(c) << endl;
-    cout << "Broj iteracija: " << iteration << endl;
+    cout << "Broj iteracija: " << iteracija << endl;
 }

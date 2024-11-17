@@ -3,7 +3,7 @@ using namespace std;
 
 // Deklaracije funkcija za metode rješavanja zadataka
 void regulaFalsi();    // Metoda Regula Falsi
-void newtonMethod();   // Newtonova metoda
+void newtonMetoda();   // Newtonova metoda
 
 int main() {
     int izbor;           // Varijabla za pohranu izbora korisnika
@@ -24,7 +24,7 @@ int main() {
             regulaFalsi();  // Poziv funkcije za Regula Falsi metodu
             break;
         case 2:
-            newtonMethod(); // Poziv funkcije za Newtonovu metodu
+            newtonMetoda(); // Poziv funkcije za Newtonovu metodu
             break;
         case 0:
             nastavak = false; // Izlazak iz programa
